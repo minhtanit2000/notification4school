@@ -1,0 +1,99 @@
+<%- include ("includes/header") %>
+<script type="text/javascript">
+
+</script>
+            <div class="container-fluid upload-details">
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="main-title">
+                        <h6>Thông tin cá nhân</h6>
+                     </div>
+                  </div>
+               </div>
+               <form method="POST" action="/save_settings" enctype="multipart/form-data">
+                  <div class="container">
+
+                  <div class="row">
+                     <div class="col-sm-3 text-center">
+
+                           <img class="avatar-profile-setting" src="<%= user.avatar %>">
+                           <div class="form-group col-sm-12 ">
+                              <label class="control-label">Thay ảnh đại diện</label>
+                              <input class="btn btn-outline-primary btn-block" type="file" name="avatar" accept="image/*"></input>
+                           </div>
+                     </div>
+
+
+                     <div class="col-sm-9">
+                        <div class="col-sm-12">
+                           <div class="form-group">
+                              <label class="control-label">Họ và tên</label>
+                              <input class="form-control border-form-control" name="name" value="<%= user.name %>" >
+                           </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                           <div class="form-group">
+                              <label class="control-label">MSSV</label>
+                              <input readonly class="form-control border-form-control" name="mssv"  value="<%= user.mssv %>" >
+                           </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                           <div class="form-group">
+                              <label class="control-label">Mã lớp</label>
+                              <input class="form-control border-form-control" name="class"  value="<%= user.class %>" >
+                           </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                           <label>Khoa</label>
+                           <select class=" form-control col-md-12" name="faculty">
+                              <option value="Khoa Mỹ thuật công nghiệp">Khoa Mỹ thuật công nghiệp</option>
+                              <option value="Khoa Điện – Điện tử">Khoa Điện – Điện tử</option>
+                              <option value="Khoa Luật">Khoa Luật</option>
+                              <option value="Khoa Công nghệ thông tin">Khoa Công nghệ thông tin</option>
+                              <option value="Khoa Quản trị kinh doanh">Khoa Quản trị kinh doanh</option>
+                              <option value="Khoa Môi trường và bảo hộ lao động">Khoa Môi trường và bảo hộ lao động</option>
+                              <option value="Khoa Lao động công đoàn">Khoa Lao động công đoàn</option>
+                              <option value="Khoa Tài chính ngân hàng">Khoa Tài chính ngân hàng</option>
+                              <option value="Khoa giáo dục quốc tế">Khoa giáo dục quốc tế</option>
+                              <option value="Khoa Dược">Khoa Dược</option>
+                              <option value="Khoa kế toán">Khoa kế toán</option>
+                              <option value="Khoa khoa học thể thao">Khoa khoa học thể thao</option>
+                              <option value="Khoa khoa học ứng dụng">Khoa khoa học ứng dụng</option>
+                              <option value="Khoa khoa học xã hội và nhân văn">Khoa khoa học xã hội và nhân văn</option>
+                              <option value="Khoa kỹ thuật công trình">Khoa kỹ thuật công trình</option>
+                              <option value="Khoa ngoại ngữ">Khoa ngoại ngữ</option>
+                              <option value="Khoa toán - thống kê">Khoa toán - thống kê</option>
+                           </select>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                           <% if (error != "") { %>
+                              <div class="alert alert-danger">
+                                 <%= error %>
+                              </div>
+                           <% } %>
+
+                           <% if (message != "") { %>
+                              <div class="alert alert-success">
+                                 <%= message %>
+                              </div>
+                           <% } %>
+                        </div>
+
+                        <div class="col-sm-12 text-right">
+                           <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Lưu</button>
+                        </div>
+
+                     </div>
+               </div>
+
+
+               </div>
+               </form>
+            </div>
+            <!-- /.container-fluid -->
+
+

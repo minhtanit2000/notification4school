@@ -1,0 +1,75 @@
+<%- include ("includes/header") %>
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+<div class="row">
+   <div class="col-lg-12">
+      <div class="main-title">
+         <h6>Thông tin cá nhân</h6>
+      </div>
+   </div>
+</div>
+            <div class="container-fluid upload-details">
+ 
+               <form method="POST" action="/saved_settings_faculty">
+                  <div class="container">
+                   
+
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="form-group">
+                           <label class="control-label">Tên Phòng/Khoa</label>
+                           <input disabled class="form-control border-form-control" name="name" value="<%= user.name %>" required>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <label class="control-label">Role:</label>
+                        <select disabled id="choices-multiple-remove-button" multiple name="role">
+                           <% role.forEach(function (role) { %>
+                           <option value="<%= role %>" selected ><%= role %></option>
+                           <% }) %>
+                         </select>
+                     </div>
+                  </div>
+                  <br>
+
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <label class="control-label">Password:</label>
+                        <input class="form-control border-form-control" name="password" placeholder="....."  type="password">
+                     </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                     <div class="col-md-12 text-center">
+                         <% if (error != "") { %>
+                             <div class="alert alert-danger">
+                                 <%= error %>
+                             </div>
+                         <% } %>
+
+                         <% if (message != "") { %>
+                             <div class="alert alert-success">
+                                 <%= message %>
+                             </div>
+                         <% } %>
+                     </div>
+                 </div>
+                 <br>
+
+                  <div class="row">
+                     <div class="col-sm-12 text-right">
+                        <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Lưu</button>
+                     </div>
+                  </div>
+
+               </div>
+               </form>
+            </div>
+            <!-- /.container-fluid -->
+
+

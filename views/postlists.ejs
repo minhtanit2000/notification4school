@@ -1,0 +1,95 @@
+<%- include ("includes/header") %>
+   
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.js"></script>
+<div class="row">
+   <div class="col-lg-12">
+      <div class="main-title">
+         <h6>Danh sách thông báo</h6>
+      </div>
+   </div>
+</div>
+
+      <div class="container-fluid pb-0">
+ 
+
+         <div class="video-block section-padding">
+            <div class="row">
+               <div class="col-sm-9">
+
+                  <div class="header-news text-center text-white align-center">
+                     <label style="margin-top:10px"> Thông báo mới</label>
+                  </div>
+
+                  <div class="video-card" >
+                     <% posts.forEach(function (post) { %>
+                        <% if ((post.user.name != "admin") && (post.user.role)) { %>
+                        <div class="video-card-body">
+                           <div class="c">
+                              
+                              <h5> <i class="far fa-bell text-success"></i><a  title="<%= post.title %>" href="" class="font-weight-bold"><%= post.title %> </a></h5>
+                           </div>
+                           <div class="c">
+                              
+                              <h6> <i class="far fa-user text-success"></i><a title="<%= post.user.name %>" href="/profile?c=<%= post.user._id %>" class="font-italic"><%= post.user.name %></a> </h6> 
+
+                           </div>
+                           <div>  <i class="far fa-clock text-success"></i>
+                                       <%
+                                       var createdAt = new Date(post.createdAt);
+                                       var date = createdAt.getDate() + ""; %>
+                                       <%= createdAt.getHours() + ":" + createdAt.getMinutes()  + " " + date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                           </div>
+                        </div>
+                        
+                        <% } %>
+                     <% }) %>
+                    
+                     <div >
+                        <ul class="pagination justify-content-center">
+                           
+                        </ul>
+                    </div>
+                   </div>
+               </div>
+               <div class="col-sm-3">
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /.container-fluid -->
+
+<script>
+
+  pageSize =10;
+  pagesCount = $(".video-card-body").length;
+  
+  var totalPages = Math.ceil(pagesCount / pageSize)
+
+    $('.pagination').twbsPagination({
+    totalPages: totalPages,
+    visiblePages:3 ,
+    onPageClick: function (event, page) {
+        var startIndex = (pageSize*(page-1))
+        var endIndex = startIndex + pageSize
+        $('.video-card-body').hide().filter(function(){
+            var idx = $(this).index();
+            return idx>=startIndex && idx<endIndex;
+        }).show()
+    } 
+});
+
+
+
+</script>
+
+
+

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="Askbootstrap">
+   <meta name="author" content="Askbootstrap">
+   <title>TDTU's Notifications</title>
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+
+    <!-- Scrollbar Custom CSS -->
+  
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <!-- Popper.JS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+   <!-- Bootstrap JS -->
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+   <!-- jQuery Custom Scroller CDN -->
+
+
+   <!-- Favicon Icon -->
+   <link rel="icon" type="image/png" href="public/img/favicon.png">
+   <!-- Bootstrap core CSS-->
+
+   <link href="/public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+   <!-- Custom styles for this template-->
+   <link href="/public/css/osahan.css" rel="stylesheet">
+   <!-- Owl Carousel -->
+   
+
+
+   <script type="text/javascript" src="stylesheets/main.js"></script>
+
+   <style type="text/css">
+      .thumbnail {
+         width: 370px;
+         height: 270px;
+         object-fit: cover;
+      }
+      .ajs-success {
+         color: white;
+      }
+   </style>
+</head>
+
+
+
+<body id="page-top">
+
+   <nav class="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
+         &nbsp;&nbsp;
+         <button class="btn btn-link btn-sm text-secondary order-1 order-sm-0" id="sidebarToggle">
+         <i class="fas fa-bars"></i>
+         </button> &nbsp;&nbsp;
+         <a class="navbar-brand mr-1" href="/posts"><img class="img-fluid" alt="" src="public/img/logo.png"></a>
+         <!-- Navbar Search -->
+         <form method="GET" action="/search" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
+            <div class="input-group">
+               <input autocomplete="off" type="text" name="search_query" class="form-control search" placeholder="Tìm kiếm thông báo...">
+               <div class="input-group-append">
+                  <button class="btn btn-light" type="submit">
+                  <i class="fas fa-search"></i>
+                  </button>
+               </div>
+            </div>
+         </form>
+         <!-- Navbar -->
+
+         <ul class="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
+
+            <% if (isLogin || isLogina) { %>
+               
+               <li class="nav-item dropdown osahan-right-navbar-user">
+                  <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+
+                     <img  id="my-profile-picture" style="object-fit: cover;" src = '<%= user.avatar %>'>
+
+                     <span id="username"></span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown"> 
+                     <a class="dropdown-item" href="/my_profile"><i class="fas fa-fw fa-user"></i>  &nbsp; Trang cá nhân</a>
+                     <% if (user.name =="admin") { %>
+                     <a class="dropdown-item" href="/add_user"> <i class="fas fa-fw fa-user-plus"></i> &nbsp; Thêm Phòng/Khoa</a>
+                     
+                     <% } else {%> 
+                        <% if ((user.email)) { %>
+                           <a class="dropdown-item" href="/student_setting"><i class="fas fa-fw fa-cog"></i> &nbsp; Thông tin cá nhân</a>
+                           <% } else {%>  
+                           <a class="dropdown-item" href="/my_settings"><i class="fas fa-fw fa-cog"></i> &nbsp; Thông tin cá nhân</a>
+                           <% } %>
+                     <% } %>
+                     
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="/logout" ><i class="fas fa-fw fa-sign-out-alt"></i> &nbsp; Đăng xuất</a>
+                  </div>
+               </li>
+            <% } else { %>
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="/login"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Login</a>
+                </li>
+            <% } %>
+         </ul>
+      </nav>
+
+      <%
+         months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      %>
+
+      <script type="text/javascript">
+         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      </script>
+
+      <% if (isLogin) { %>
+         <script type="text/javascript">
+
+            var ajax = new XMLHttpRequest();
+            ajax.open("GET", "/get_user", true);
+
+            ajax.onreadystatechange = function () {
+               if (this.readyState == 4 && this.status == 200) {
+                  var res = JSON.parse(this.responseText);
+
+                  if (res.status == "success") {
+                     window.user = res.user;
+                     document.getElementById("username").innerHTML = user.name ;
+                     document.getElementById("my-profile-picture").setAttribute("src", window.user.avatar);
+                  }
+               }
+            };
+
+            ajax.send();
+         </script>
+      <% } %>
+
+      <div id="wrapper">
+
+         <!-- Sidebar -->
+         <ul class="sidebar navbar-nav" id="left-sidebar">
+
+            <li class="nav-item ">
+               <a class="nav-link" href="/posts">
+               <i class="fas fa-fw fa-home"></i>
+               <span>Trang chủ</span>
+               </a>
+            </li>
+
+            <li class="nav-item">
+               <a class="nav-link" href="#list-notifications" data-toggle="collapse" class="dropdown-toggle">
+               <i class="fas fa-fw fa-bell"></i>
+               <span class="selectpicker"  >Phân loại thông báo</span>
+               <i class='fas fa-angle-down'></i>
+               </a>
+               <ul class="collapse group" id="list-notifications">
+                  <li class="nav-item details">
+                     <a class="nav-link" href="/faculty">
+                     <i class="fas fa-fw fa-users"> </i>
+                     <span>Khoa</span>
+                     </a>
+                  </li>
+                  <li class="nav-item details">
+                     <a class="nav-link" href="/notifications-details">
+                     <i class="fas fa-fw fa-list"> </i>
+                     <span>Chi tiết thông báo</span>
+                     </a>
+                  </li>
+              </ul>
+            </li>
+
+            
+         </ul>
+            
+
+         <div id="content-wrapper" class="<%= typeof headerClass == "undefined" ? '' : headerClass %>">
+   

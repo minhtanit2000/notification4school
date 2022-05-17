@@ -1,0 +1,253 @@
+<%- include ("includes/header") %>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.js"></script>
+
+<div class="row">
+   <div class="col-lg-12">
+      <div class="main-title">
+         <h6>Trang cá nhân</h6>
+      </div>
+   </div>
+</div>
+
+            <div class="single-channel-nav text-center"> 
+               
+                  
+                  <h6> </h6>
+
+                
+                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                           <img class="avatar-profile-single" src="<%= user.avatar %>">
+                           <h6 class="nav-link" ><%= user.name %> <i class="fas fa-check-circle text-success"></i></h6>
+                        </li>
+                     </ul>
+
+                  
+            </div>
+
+
+         
+
+            <div class="container-fluid tab" id="videos">
+               <div class="video-block section-padding">
+                  <div class="row" id="videos-section">
+                     <div class="col-sm-9">
+	                     <% if (user.posts) { user.posts = user.posts.reverse(); %>
+							      <% user.posts.forEach (function (video) { %>
+			                        <div id="form-" class="list-timeline">
+			                           <div class="video-card">
+                                       <div class="video-card-body">
+                                          <div class="row card-header">
+            
+                                             <div class="col-sm-1">
+                                                <img class="avatar-profile" width="50px"  height="50px"src="<%= user.avatar %>">
+                                             </div>
+            
+                                             <div class="row col-sm-11">
+                                                <div class="col-sm-11 text-white">
+                                                   <h6 class="text-white"><a class="text-white" href=""><%= user.name %> <i class="fas fa-check-circle text-white"></i></a> </h6>
+                                                   <i class="fas fa-clock"></i> <%
+                                                   var createdAt = new Date(video.createdAt);
+                                                   var date = createdAt.getDate() + ""; %>
+                                                   <%= createdAt.getHours() + ":" + createdAt.getMinutes()  + " " + date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                                                </div>
+                                                <% if ( isMyChannel ||( user.name == "admin")) { %>
+                                                <div class="btn-group text-center text-right dropup">
+                                                   <button class="btn bg-transparent" type="button" data-toggle="dropdown"><i class=" text-white fas fa-ellipsis-v"></i></button>
+                                                      <ul class="dropdown-menu">
+                                                        <li><a href="#">Chỉnh sửa</a></li>
+                                                        <li><form class="delete-post-form" id="delete-form-<%=video._id%>" enctype="multipart/form-data">
+                                                         <button id="<%=video._id%>" class="btn btn-outline-primary btn-block btn-delete-post" onclick="deletePost(this)">Xóa bài</button>
+                                                      </form></li>      
+                                                      </ul>
+                                                </div>
+                                                <% } %>
+
+                                                <input class="form-control nothing" style="display: none;" id="nothing" placeholder= "Nhúng link Youtube..." type="text" name="video">
+
+                                                
+                                             </div>
+            
+                                          </div>
+                                           <Br>
+
+                                             <div class="col-sm-12">
+                                                <label class="font-weight-bold" >Tiêu đề:</label>
+                                                <h5><%= video.title %></h5>
+                                                
+                                             </div>
+                                             
+               
+                                             <div class="col-sm-12">
+                                                <label class="font-weight-bold">Nội dung:</label>
+                                                <p class="font-weight-normal"><%= video.description %></p>
+                                             </div>
+                                         
+                                       </div>
+                                       <% if (video.video) { %>
+                                          <div class="video-card-image">
+                                             <iframe width="900px" height="400px" src="<%= video.video %>"> </iframe> 
+                                          </div>
+                                    <% } %>
+         
+                                    <% if (video.thumbnail) { %>
+                                       <div class="video-card-image">
+                                          <img   max-width="900px" max-height="400px" src="<%= video.thumbnail %>">
+                                       </div>
+                                    <% } %>
+                                          <form method="POST" action="/hello">
+                                             <div class="row">
+                                                   <div class="col-sm-12 card-body">
+                                                      <input class="form-control" placeholder= "Nhập bình luận..." type="text" name="comment">
+                                                   </div>
+                                                   
+                                              </div>
+                                           </form>
+                                       </div>
+                                       
+                                 </div>  
+                             
+	                     	<% }) %>
+						      <% } %>
+                        <div >
+                           <ul class="paginationa justify-content-center">
+                              
+                           </ul>
+                       </div>
+                     </div>
+
+
+
+                     <div class="col-sm-3">
+                        <div class="header-news text-center text-white align-center">
+                           <label style="margin-top:10px"> Thông báo mới</label>
+                        </div>
+                        <div class="video-card" >
+                           <% user.posts.forEach(function (post) { %>
+                              <% if ((user.name != "admin") && (user.role)) { %>
+                              <div class="video-card-body list-post-hide" >
+                                 <div class="b">
+                                    <i class="far fa-bell"></i>
+                                    <a  title="<%= post.title %>" href="" class="font-weight-bold"><%= post.title %> </a>
+                                 </div>
+                                 <div class="b">
+                                    <i class="far fa-user"></i>
+                                    <a title="<%= user.name %>" href="/profile?c=<%= user._id %>" class="font-italic"><%= user.name %> </a> 
+            
+                                 </div>
+                                 <div>  <i class="far fa-clock"></i>
+                                             <%
+                                             var createdAt = new Date(post.createdAt);
+                                             var date = createdAt.getDate() + ""; %>
+                                             <%= createdAt.getHours() + ":" + createdAt.getMinutes()  + " " + date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                                 </div>
+                              </div>
+                              
+                              <% } %>
+                           <% }) %>
+                           <div >
+                              <ul class="pagination justify-content-center">
+                                 
+                              </ul>
+                          </div>
+                        </div>
+                        
+                     </div>
+
+
+                     
+
+                  </div>
+               </div>
+            </div>
+
+
+
+            <script>
+
+               pageSize = 10;
+               pagesCount = $(".list-post-hide").length;
+               
+               var totalPages = Math.ceil(pagesCount / pageSize)
+             
+                 $('.pagination').twbsPagination({
+                 totalPages: totalPages,
+                 visiblePages:3,
+                 onPageClick: function (event, page) {
+                     var startIndex = (pageSize*(page-1))
+                     var endIndex = startIndex + pageSize
+                     $('.list-post-hide').hide().filter(function(){
+                         var idx = $(this).index();
+                         return idx>=startIndex && idx<endIndex;
+                     }).show()
+                 } 
+             });
+
+             pageSize = 10;
+pagesCount = $(".list-timeline").length;
+
+var totalPages = Math.ceil(pagesCount / pageSize)
+
+  $('.paginationa').twbsPagination({
+  totalPages: totalPages,
+  visiblePages:3,
+  onPageClick: function (event, page) {
+      var startIndex = (pageSize*(page-1))
+      var endIndex = startIndex + pageSize
+      $('.list-timeline').hide().filter(function(){
+          var idx = $(this).index();
+          return idx>=startIndex && idx<endIndex;
+      }).show()
+  } 
+});
+
+function deletePost(e) {
+   const id = e.id;
+   var formId = "delete-form-" + id;
+   var pd = "#delete-form-" + id;
+
+   var form = document.getElementById(formId);
+   var postId = "post-" + id;
+   var post = document.getElementById(postId);
+   var file = document.getElementsByClassName("nothing")[0].files;
+  
+   $(pd).submit(false);
+   $(pd).on("submit", function(e){
+      e.preventDefault();
+   })
+
+   var formData = new FormData();
+   formData.append("id", id);
+   formData.append("file", file);
+
+   var header = {
+         Headers: {
+            "content-type": "multipart/form-data"
+         }
+      }
+      
+   axios.post('/deletePost',formData, header)
+   .then(function (res) {
+   
+      var idDiv = res.data.id;
+      var del = "post-" + idDiv;
+
+      document.getElementById(del).style.display = "none";
+
+      $(pd).submit(false);
+      $(pd).on("submit", function(e){
+         e.preventDefault();
+      })
+      return false;  
+   })   
+   .catch(function (err) {
+      console.log(err);
+   });
+   return false;
+}
+</script>
+

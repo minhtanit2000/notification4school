@@ -1,0 +1,609 @@
+<%- include ("includes/header") %>
+   
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.1/jquery.twbsPagination.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<div class="row">
+   <div class="col-lg-12">
+      <div class="main-title">
+         <h6>Timeline</h6>
+      </div>
+   </div>
+</div>
+
+      <div class="container-fluid pb-0">
+ 
+
+         <div class="video-block section-padding">
+            <div class="row">
+               <div class="col-sm-9">
+                  <div class="video-card">
+                     <div class="single-channel-nav text-center"> 
+               
+                  
+                        
+                      
+                           <ul class="navbar-nav">
+                              <li class="nav-item active">
+                                 <div class="">
+                                    <input  readonly class="form-control text-center"value="Bấm vào đây để đăng thông báo..."  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                 </div>
+                                 <p class="nav-link" ></p>
+                              </li>
+                           </ul>
+      
+                        
+                  </div>
+      
+                     
+                     
+                     <div class="text-center">
+                        <i class="fas fa-chevron-down"></i>
+                     </div>
+                  
+                     <div class="collapse" id="collapseExample">
+                        <div class="col-md-12">
+                           <form method="post" class="post-form" id="post-form" enctype="multipart/form-data">
+                              <br>
+                              <div class="form-group">
+                                 <label>Tiêu đề</label>
+                                 <input type="text" id="title" name="title" class="form-control" placeholder= "Nhập tiêu đề..." required>
+                              </div>
+                              
+                              <div class="form-group">
+                                 <label>Nội dung</label>
+                                 <textarea type="text" id="description" name="description" rows="10"   placeholder= "Nhập nội dung..." class="form-control"></textarea>
+                              </div>
+                              <% if (role) { %>
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <label class="control-label">Chuyên mục:</label>
+                                    <select id="choices-multiple-remove-button" name="role">
+                                       <% role.forEach(function (role) { %>
+                                       <option value="<%= role %>" ><%= role %></option>
+                                       <% }) %>
+                                     </select>
+                                 </div>
+                              </div>
+                              <% } %>
+                              <br>
+                              <div class="row">
+                                 <div class="form-group col-sm-12">
+                                 <label>Điền link Youtube</label>
+                                 <input class="form-control"  id="video" placeholder= "Nhập URL Youtube (Ví dụ: https://www.youtube.com/watch?v=Ws-QlpSltr8)" type="text" name="video">
+                                 </div>
+                              </div>
+                  
+                              <div class="row">
+                                 <div class="form-group col-sm-9 ">
+                                    <label>Chọn hình ảnh</label>
+                                    <input class="btn btn-block btn-lg text-center" type="file" id="thumbnail" name="thumbnail" accept="image/*" ></input>
+                                 </div>
+                                 <div class="form-group col-sm-3 ">
+                                    <label></label>
+                                    <button onclick="addPost(this)" type="submit" id="submit-btn" class="btn btn-outline-primary btn-block btn-lg submit-btn">Xác nhận</button>
+                                 </div>
+                              </div>
+                              <div class="col-md-12 text-center">
+                              <div id="error" style="display:none" class="alert alert-danger">
+                              </div>
+                              </div>
+                              <br>
+                  
+
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="newPost"></div>
+
+                  <br>
+
+                  <% posts.forEach(function (video) { %>
+                     <div class="col-sm-12 list-timeline " id="post-<%=video._id%>">
+                        <div class="video-card ">
+                           <div class="video-card-body">
+                              <div class="row card-header">
+
+                                 <div class="col-sm-1">
+                                 <img class="avatar-profile" width="50px"  height="50px"src="<%= video.user.avatar %>">  
+                                 </div>
+
+                                 <div class="row col-sm-11">
+                                    <div class="col-sm-11 text-white">
+                                       <h6 class="text-white"><a class="text-white" href="/profile?c=<%= video.user._id %>"><%= video.user.name %> <i class="fas fa-check-circle text-white"></i></a> </h6>
+                                       <i class="fas fa-clock"></i> <%
+                                       var createdAt = new Date(video.createdAt);
+                                       var date = createdAt.getDate() + ""; %>
+                                       <%= createdAt.getHours() + ":" + createdAt.getMinutes()  + " " + date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                                       - <% if (video.user.role) { %></i> Chuyên mục: <a class="text-white font-weight-bold" href="/posts"><%= video.user.role %></a>  <% } %>
+                                    </div>
+                                   
+
+                                    <% if (user.name == "admin" || (user.name == video.user.name)) { %>
+                                       <div class="btn-group text-center text-right dropup">
+                                          <button class="btn bg-transparent" type="button" data-toggle="dropdown"><i class=" text-white fas fa-ellipsis-v"></i></button>
+                                             <ul class="dropdown-menu">
+                                               <li><a href="#">Chỉnh sửa</a></li>
+                                               <li><form class="delete-post-form" id="delete-form-<%=video._id%>" enctype="multipart/form-data">
+                                                <button id="<%=video._id%>" class="btn btn-outline-primary btn-block btn-delete-post" onclick="deletePost(this)">Xóa bài</button>
+                                             </form></li>
+                                             </ul>
+                                       </div>
+                                    <% } %>
+
+                                   
+
+
+                                 </div>
+
+                              </div>
+                              <div class="col-sm-12">
+                                 <label class="font-weight-bold" >Tiêu đề:</label>
+                                 <h5><%= video.title %></h5>
+                                 
+                              </div>
+                              
+
+                              <div class="col-sm-12">
+                                 <label class="font-weight-bold">Nội dung:</label>
+                                 <p class="font-weight-normal"><%= video.description %></p>
+                              </div>
+                             
+
+                           </div>
+                           <% if (video.video) { %>
+                                 <div class="video-card-image">
+                                    <div style="text-align: center;">
+                                       <iframe width="900px" height="400px" src="<%= video.video %>"> </iframe> 
+                                    </div>
+                                 </div>
+                           <% } %>
+
+                           <% if (video.thumbnail) { %>
+                              <div class="video-card-image">
+                                 <img   max-width="900px" max-height="400px" src="<%= video.thumbnail %>">
+                              </div>
+                           <% } %>
+                           <% if (video.comments)  { %>
+                           <% video.comments.forEach(function (comment) { %>
+                              <div id="post-comment-<%=comment._id%>_<%=video._id%>">
+                                 <form class="test" id="commment-user-form-<%=comment._id%>_<%=video._id%>" enctype="multipart/form-data">
+                                    <div><%=comment.name%></div>
+                                    <div><%=comment.text%></div>
+                                    <button style   type="button" class="btn btn-dark" id="<%=comment._id%>_<%=video._id%>" onclick="deleteComment(this)" type="submit">xóa cmt</button>
+                                 </form>
+                              </div>
+                              
+                            <%}) %>
+                            <%} %>
+
+                           <input class="form-control nothing" style="display: none;" id="nothing" placeholder= "Nhúng link Youtube..." type="text" name="video">
+
+                           <form class="comment-form" id="comment-form-<%=video._id%>" method="POST" >
+                              <div class="row">
+                                    <div class="col-sm-12 card-body">
+                                       <input  id="comment-text-<%=video._id%>" onkeypress="doComment(this)" class="form-control" placeholder= "Nhập bình luận..." type="text" name="comment">
+                                    </div>
+                                    
+                               </div>
+                            </form>
+                           </div>
+
+                           
+                     </div>  
+                   
+                  <% }) %>
+                  <div >
+                     <ul class="paginationa justify-content-center">
+                        
+                     </ul>
+                 </div>
+               </div>
+               
+               
+               
+               
+               <div class="col-sm-3">
+                  <div class="header-news text-center text-white align-center">
+                      <label style="margin-top:10px"> Thông báo mới</label> <span class="badge badge-success "><a class="text-white" href="/notifications-details">Xem tất cả</a></span> 
+                  </div>
+                  <div class="video-card" >
+                     <% posts.forEach(function (post) { %>
+                        <% if ((post.user.name != "admin") && (post.user.role)) { %>
+                        <div class="video-card-body list-post-hide" >
+                           <div class="b">
+                              <i class="far fa-bell"></i>
+                              <a  title="<%= post.title %>" href="" class="font-weight-bold"><%= post.title %> </a>
+                           </div>
+                           <div class="b">
+                              <i class="far fa-user"></i>
+                              <a title="<%= post.user.name %>" href="/profile?c=<%= post.user._id %>" class="font-italic"><%= post.user.name %> </a> 
+      
+                           </div>
+                           <div>  <i class="far fa-clock"></i>
+                                       <%
+                                       var createdAt = new Date(post.createdAt);
+                                       var date = createdAt.getDate() + ""; %>
+                                       <%= createdAt.getHours() + ":" + createdAt.getMinutes()  + " " + date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear() %>
+                           </div>
+                        </div>
+                        
+                        <% } %>
+                     <% }) %>
+                     <div >
+                        <ul class="pagination justify-content-center">
+                           
+                        </ul>
+                    </div>
+                   </div>
+                   
+               </div>
+
+              
+               
+
+            </div>
+            
+         </div>
+      </div>
+      <!-- /.container-fluid -->
+
+<script>
+
+  pageSize = 10;
+  pagesCount = $(".list-post-hide").length;
+  
+  var totalPages = Math.ceil(pagesCount / pageSize)
+
+    $('.pagination').twbsPagination({
+    totalPages: totalPages,
+    visiblePages:3,
+    onPageClick: function (event, page) {
+        var startIndex = (pageSize*(page-1))
+        var endIndex = startIndex + pageSize
+        $('.list-post-hide').hide().filter(function(){
+            var idx = $(this).index();
+            return idx>=startIndex && idx<endIndex;
+        }).show()
+    } 
+  });
+
+
+pageSize = 10;
+pagesCount = $(".list-timeline").length;
+
+var totalPages = Math.ceil(pagesCount / pageSize)
+
+  $('.paginationa').twbsPagination({
+  totalPages: totalPages,
+  visiblePages:3,
+  onPageClick: function (event, page) {
+      var startIndex = (pageSize*(page-1))
+      var endIndex = startIndex + pageSize
+      $('.list-timeline').hide().filter(function(){
+          var idx = $(this).index();
+          return idx>=startIndex && idx<endIndex;
+      }).show()
+  } 
+});
+
+var button123 = document.getElementById("submit-btn");
+//add post
+function addPost(e){
+   $(".post-form").submit(false);
+   $("post-form").submit(false);
+   var title = document.getElementById("title").value;
+   var description = document.getElementById("description").value;
+   var video = document.getElementById("video").value;
+   var myFile = document.getElementById("thumbnail").files;
+   var role = document.getElementById("choices-multiple-remove-button");
+   if (title.trim() === "" && description.trim() === "" && video.trim()==="" && myFile.length === 0) {
+      return ;
+   }
+   else {
+      var formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("video", video);
+      if (role != null){
+         formData.append("role", role.value);
+      }
+     
+
+
+      //ktra duoi file
+      var trueType = false; 
+      var fileNum = 0;
+      for (var i=0; i<myFile.length; i++){
+         var e = myFile[i].type;
+         if ( e.includes("image")){
+            trueType = true;
+            fileNum += 1;
+         }
+      }
+      if (fileNum !== myFile.length){
+            trueType = false;
+      }
+      if (myFile.length === 0){
+            trueType = true;
+      }
+      fileNum = 0;
+
+      //sai duoi file
+      if (trueType === false){
+            document.getElementById("error").innerHTML = "Định dạng file không đúng";
+            document.getElementById("error").style.display = "block"
+            return;
+      } else {
+         if (video.trim()!=='') {
+            if (!video.includes("youtube.com/watch?v")) {
+               console.log(video)
+               document.getElementById("error").innerHTML = "Định dạng link video không đúng";
+               document.getElementById("error").style.display = "block"
+               return;
+            }
+         }
+         
+
+         //neu nhap input dung thi ....
+         for (var i=0; i<myFile.length; i++){
+            formData.append("myFile", myFile[i]);
+         }
+         var header = {
+            Headers: {
+               "content-type": "multipart/form-data"
+            }
+         }
+         
+         axios.post('/addPost',formData, header)
+         .then(function (res) {
+         
+         var html = ""; 
+         html += "<link rel=\"stylesheet\" href=\"osahan.css\" />"
+         html += "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css\"  crossorigin=\"anonymous\"/>"
+         
+         html += '<div class="col-sm-12">';
+         html += '<div class="video-card" style="background: #fff none repeat scroll 0 0;border-radius: 2px;box-shadow: 0 0 11px #ececec;transition-duration: 0.4s;">';
+         html += '<div class="video-card-body style="border-bottom: 1px solid black;">';
+         html += '<div class="row card-header" style="padding: 10px;margin:0 0 0 0;background-color:  #5cd9ff;">';
+         html += '<div class="col-sm-1">';
+         html += '<img class="avatar-profile" width="50px"  height="50px"src="' + res.data.avatar +'">';
+         html += '</div>';
+         html += '<div class="row col-sm-11">';
+         html += '<h6 class="text-white">';
+            html +=    res.data.name ;
+            html +='<i class="fas fa-check-circle text-white">';
+               html +=   '</i>';
+               html +=  '</h6>' ;
+         html += '<i class="fas fa-clock"></i>';
+         var createdAt = res.data.createdAt;
+         createdAt = new Date(res.data.createdAt);
+         var date = createdAt.getDate() + "";
+         var final_date = createdAt.getHours() + ":" + createdAt.getMinutes()  + " " + date.padStart(2, "0") + " " + months[createdAt.getMonth()] + ", " + createdAt.getFullYear();
+         html += final_date;
+         html += '</div>';
+         html += '<div class="col-sm-1 text-white text-right">';
+         html += '<i class="fas fa-ellipsis-v"></i>';
+         html += '</div>';
+         html += '</div>';
+         html += '</div>';
+         html += '<Br>';
+         html += '<div class="col-sm-12">';
+            if (res.data.title) {
+               html += '<h5>Tiêu đề: '+ res.data.title +'</h5>';
+            } 
+            if (res.data.description){ 
+               html += '<h6>'+ res.data.description +'</h6>';
+            }
+         html += '<a href="#" </a>';
+         html += '</div>';
+         html += '</div>';
+         html += '<div class="video-card-image">';
+         if (res.data.thumbnail.length > 0){
+            html += '<img width="900px" height="400px" src="'+res.data.thumbnail+'">'
+
+         }
+         if (res.data.video){
+            html += '<iframe width="900px" height="400px" src="'+res.data.video +'" </iframe>';
+         }
+         html += '</div>';
+         html += '</div>';
+         html += '</div>';
+         
+         var parser = new DOMParser();
+         var doc = parser.parseFromString(html, 'text/html');
+         newPost.insertBefore(doc.body, newPost.childNodes[0])
+         document.getElementById("post-form").reset();
+         document.getElementById("error").style.display ="none";
+         })   
+         .catch(function (err) {
+            console.log(err);
+         });
+
+         //after submit clear input
+         document.getElementById("post-form").reset();
+      }
+   }
+};
+$('comment-form').submit(false);
+
+ //add comment
+function doComment(e) {
+   $('comment-form').submit(false);
+   var id = e.id ;
+   var id_split = e.id.split("-");
+   var formId = "comment-form-" + id_split[id_split.length-1];
+   var inputId = "comment-text-" + id_split[id_split.length-1];
+   var _id = id_split[id_split.length-1];
+   var form = document.getElementById(formId);
+   var msg = document.getElementById(id);
+   var file = document.getElementsByClassName("nothing")[0].files;
+   var formData = new FormData();
+
+   formData.append("_id", id);
+   formData.append("file", file);   
+
+   msg.addEventListener("keydown", (e)=> {
+      if (e.keyCode == 13){
+         e.preventDefault();
+         
+         const text = msg.value;
+         console.log(text)
+         formData.append("comment", text);
+         
+         if (text.trim() == "") {
+
+            $(formId).submit(false);
+            $(formId).on("submit", function(e){
+               e.preventDefault(); 
+            })
+            return false; 
+         } 
+         else {
+            $(formId).submit(false);
+            $(formId).on("submit", function(e){
+               e.preventDefault(); 
+            })
+         
+            var header = {
+                  Headers: {
+                     "content-type": "multipart/form-data"
+                  },
+               }
+               
+            axios.post('/addComment',formData, header)
+            .then(function (res) {
+            
+               console.log(res.data)
+
+
+               $(formId).on("submit", function(e){
+                  e.preventDefault();
+               })
+            })   
+            .catch(function (err) {
+               console.log(err);
+            });
+
+            //after submit clear input
+            document.getElementById(formId).reset();
+            }
+      }
+   })
+   return false;
+}
+
+//delete post
+function deletePost(e) {
+   const id = e.id;
+   var formId = "delete-form-" + id;
+   var pd = "#delete-form-" + id;
+
+   var form = document.getElementById(formId);
+   var postId = "post-" + id;
+   var post = document.getElementById(postId);
+   var file = document.getElementsByClassName("nothing")[0].files;
+  
+   $(pd).submit(false);
+   $(pd).on("submit", function(e){
+      e.preventDefault();
+   })
+
+   var formData = new FormData();
+   formData.append("id", id);
+   formData.append("file", file);
+
+   var header = {
+         Headers: {
+            "content-type": "multipart/form-data"
+         }
+      }
+      
+   axios.post('/deletePost',formData, header)
+   .then(function (res) {
+   
+      var idDiv = res.data.id;
+      var del = "post-" + idDiv;
+
+      document.getElementById(del).style.display = "none";
+
+      $(pd).submit(false);
+      $(pd).on("submit", function(e){
+         e.preventDefault();
+      })
+      return false;  
+   })   
+   .catch(function (err) {
+      console.log(err);
+   });
+   return false;
+}
+
+//delete côment
+function deleteComment(e) {
+   var id1 = e.id;
+   var id_split= id1.split("_");
+   var id = id_split[0]
+   var idPost = id_split[id_split.length-1]
+
+   var formId = "commment-user-form-" + id + "_" + idPost;
+   var pd = "#" + formId;
+
+   var form = document.getElementById(formId);
+   var postId = "post-" + id;
+   var post = document.getElementById(postId);
+   var file = document.getElementsByClassName("nothing")[0].files;
+   
+
+   $(pd).submit(false);
+   $(pd).on("submit", function(e){
+      e.preventDefault();
+   })
+   return false;
+
+   var formData = new FormData();
+   formData.append("id_comment", id);
+   formData.append("id_post", idPost);
+   formData.append("file", file);
+
+   var header = {
+         Headers: {
+            "content-type": "multipart/form-data"
+         }
+      }
+      
+   axios.post('/deleteComment',formData, header)
+   .then(function (res) {
+   
+      var idDiv = res.data.id_comment;
+      var idDiv2 = res.data.id_post;
+      var del = "post-comment-" + idDiv +"_" + idDiv2;
+
+      document.getElementById(del).style.display = "none";
+
+      $(pd).submit(false);
+      $(pd).on("submit", function(e){
+         e.preventDefault();
+      })
+      return false;  
+   })   
+   .catch(function (err) {
+      console.log(err);
+   });
+   return false;
+}
+
+</script>
+
+
+

@@ -1,0 +1,41 @@
+<%- include ("includes/header") %>
+
+<div class="row">
+   <div class="col-lg-12">
+      <div class="main-title">
+         <h6>Phòng/ Khoa</h6>
+      </div>
+   </div>
+</div>
+
+<div class="container-fluid upload-details">
+
+
+   <div class="container">
+      <div class="row">
+         
+         
+         <% user.forEach(function (user) { %>
+            <% if (user.username && (user.username != "admin")) { %>
+            <div class="form-group col-md-3">
+               <a href="/profile?c=<%= user._id %>">
+                  <div class="card text-center">
+                     <h6 class="card-header"><%= user.name %>  </h6> 
+                     <div class="card-body">
+                        <img class="avatar-faculty" src="<%= user.avatar %>">
+                        <% var index = 0 %>
+                        <% user.posts.forEach(function (i) { %>
+                           <% index+=1 %>
+                           <% } )%>
+                        <h6 class="card-text text-black">Số thông báo: <span class="badge badge-danger "><%= index %></span></h6> 
+                     </div>
+                  </div>
+               </a>
+            </div>
+            <% } %>
+         <% }) %>
+      </div>
+   </div>
+
+
+</div>

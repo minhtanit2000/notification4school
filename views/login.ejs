@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Login</title>
+   <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+   <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+   <link rel="stylesheet" type="text/css" href='stylesheets/style.css'>
+   <script type="text/javascript" src="stylesheets/main.js"></script>
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+   </head>
+   <body class="login-main-body">
+      <% if (message != "") { %>
+         <div class="success">
+            <%= message %>
+         </div>
+      <% } %>
+
+      <% if (error != "") { %>
+         <div class="error">
+            <%= error %>
+         </div>
+      <% } %>
+                     <div class="container">
+                        <div class="frame">
+                            <div class="nav">
+                                <ul class="links">
+                                    <li class="lecture"><a class="btn" >Admin/Giảng Viên</a></li> 
+                                    <a class="choose">  or  </a>
+                                    <li class="student"><a class="btn">Sinh viên</a></li>
+                                </ul>
+                            </div>
+                            <div ng-app ng-init="checked = false">
+                                <form class="form-lecture" action="/login" method="post" name="form"> 
+                                    <img class="signin-avatar" src="/public/img/lecture.png"> 
+                                    <label for="username">Username</label> 
+                                    <input class="form-styling" type="text"  name="username" value="" autocomplete="on" placeholder="Nhập username" >
+                                    <label for="password">Password</label>
+                                    <input class="form-styling" type="password" class="form-control" name="password" id="password" placeholder="Nhập password">
+                                    <button type="submit" class="btn-login">Đăng nhập</button>
+                                </form>
+                                <form class="form-student" action="" method="post" name="form"> 
+                                    <img class="signin-avatar" src="/public/img/student.png"> 
+                                    <a href="/auth/google" class="btn-login">
+                                        <svg class="google" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                                        </svg>
+                                        Đăng nhập với Google
+                                      </a>
+                                </form>
+                            </div>
+                            
+                            
+                       
+   </body>
+
+</html>

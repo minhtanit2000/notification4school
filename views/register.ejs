@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="Askbootstrap">
+      <meta name="author" content="Askbootstrap">
+      <title>Tạo user</title>
+      <!-- Favicon Icon -->
+      <link rel="icon" type="image/png" href="public/img/favicon.png">
+      <!-- Bootstrap core CSS-->
+      <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom fonts for this template-->
+      <link href="public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Custom styles for this template-->
+      <link href="public/css/osahan.css" rel="stylesheet">
+      <!-- Owl Carousel -->
+      <link rel="stylesheet" href="public/vendor/owl-carousel/owl.carousel.css">
+      <link rel="stylesheet" href="public/vendor/owl-carousel/owl.theme.css">
+      
+   </head>
+   <body class="login-main-body">
+      <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+      <form action="/register" method="POST">
+         <div class="container">
+         <div class="row">
+            <div class="form-group col-md-6">
+               <label>Khoa</label>
+               <input type="text" class="form-control" name="name">
+            </div>
+
+            <div class="form-group col-md-6">
+               <label>Email</label>
+               <input type="text" class="form-control" name="username">
+            </div>
+
+            <div class="form-group col-md-12">
+               <label>Quyền đăng bài</label>
+               <select id="choices-multiple-remove-button" multiple name="role">
+                 <option value="Phòng Công tác học sinh sinh viên (CTHSSV)">Phòng Công tác học sinh sinh viên (CTHSSV)</option>
+                 <option value="Phòng Đại học">Phòng Đại học</option>
+                 <option value="Phòng điện toán và máy tính">Phòng điện toán và máy tính</option>
+                 <option value="Phòng khảo thí và kiểm định chất lượng">Phòng khảo thí và kiểm định chất lượng</option>
+                 <option value="Phòng tài chính">Phòng tài chính</option>
+                 <option value="TDT Creative Language Center">TDT Creative Language Center</option>
+                 <option value="Trung tâm tin học">Trung tâm tin học</option>
+                 <option value="Trung tâm đào tạo phát triển xã hội (SDTC)">Trung tâm đào tạo phát triển xã hội (SDTC)</option>
+                 <option value="Trung tâm phát triển Khoa học quản lý và Ứng dụng công nghệ (ATEM)">Trung tâm phát triển Khoa học quản lý và Ứng dụng công nghệ (ATEM)</option>
+                 <option value="Trung tâm hợp tác doanh nghiệp và cựu sinh viên">Trung tâm hợp tác doanh nghiệp và cựu sinh viên</option>
+                 <option value="Trung tâm ngoại ngữ - tin học – bồi dưỡng văn hóa">Trung tâm ngoại ngữ - tin học – bồi dưỡng văn hóa</option>
+                 <option value="Viện chính sách kinh tế và kinh doanh">Viện chính sách kinh tế và kinh doanh</option>
+                 <option value="Khoa Mỹ thuật công nghiệp">Khoa Mỹ thuật công nghiệp</option>
+                 <option value="Khoa Điện – Điện tử">Khoa Điện – Điện tử</option>
+                 <option value="Khoa Luật">Khoa Luật</option>
+                 <option value="Khoa Công nghệ thông tin">Khoa Công nghệ thông tin</option>
+                 <option value="Khoa Quản trị kinh doanh">Khoa Quản trị kinh doanh</option>
+                 <option value="Khoa Môi trường và bảo hộ lao động">Khoa Môi trường và bảo hộ lao động</option>
+                 <option value="Khoa Lao động công đoàn">Khoa Lao động công đoàn</option>
+                 <option value="Khoa Tài chính ngân hàng">Khoa Tài chính ngân hàng</option>
+                 <option value="Khoa giáo dục quốc tế">Khoa giáo dục quốc tế</option>
+                 </select> 
+           </div>
+            <div class="form-group col-md-6">
+               <label>Password</label>
+               <input type="password" class="form-control" name="password" >
+            </div>
+            
+            <div class="mt-4">
+               <p class="text-danger" id="error"></p>
+               <p class="text-success" id="success"></p>
+               <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Sign Up</button>
+            </div>
+         </div>
+      </div>
+
+      </form>
+      <!-- Bootstrap core JavaScript-->
+      <script src="public/vendor/jquery/jquery.min.js"></script>
+      <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="public/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Owl Carousel -->
+      <script src="public/vendor/owl-carousel/owl.carousel.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="public/js/custom.js"></script>
+   </body>
+</html>
